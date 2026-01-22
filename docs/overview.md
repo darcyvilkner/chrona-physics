@@ -1,6 +1,6 @@
 # Overview
 
-Chrona is a 2d, event-driven, affine-transform-based physics engine written in JavaScript. It is an engine that focuses on composability, control, and expressiveness. This document explains what chrona is at a high level. For learning how to use the engine see the [getting started](./getting-started) document.
+Chrona is a 2d, event-driven, affine-transform-based physics engine written in JavaScript. It is an engine that focuses on composability, control, and expressiveness. This document explains what chrona is at a high level. For learning how to use the engine, see the [getting started](./getting-started) document.
 
 ## Composability
 
@@ -10,7 +10,7 @@ Rather than providing a large collection of specialized features, Chrona focuses
 
 For example, Chrona only supports linear geometry. Curved surfaces are represented by approximating them with line segments. This is not a limitation in practice, but a way to avoid maintaining a long and uneven list of collider types—and the frustration of discovering that the one you need is missing.
 
-Similarly, Chrona does not include rotation as a first-class concept. Instead, motion is described entirely using affine transformations, which are sufficient to represent rotation, scaling, and shearing without introducing additional structures or special cases. This reduces the number of concepts users need to learn, without losing expressiveness.
+Similarly, Chrona does not include rotation as a first-class concept. Instead, motion is described entirely using affine transformations, which are sufficient to represent rotation, scaling, and shearing without introducing additional structures or special cases. This reduces the number of concepts users need to learn without losing expressiveness.
 
 Finally, it hands you full control over how collisions are handled. You are able to handle anything from inelastic collisions to elastic collisions to collisions with friction to collisions that cause objects to spin. If you can describe it, you can implement it.
 
