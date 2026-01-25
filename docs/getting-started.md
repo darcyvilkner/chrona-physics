@@ -132,7 +132,7 @@ This section will assume you have a basic understanding of the Canvas API.
 
 A debug renderer is created by providing:
 
-- x // Define how collision works​const [    bouncyBalls,    stressBalls,    floor,] = collisionGroups()​new CollisionRule(bouncyBalls, floor, tolerances, collision => {    // bouncy balls bounce off the floor; the floor does not move    collision.resolve(0, 1, 0, 1)})​new CollisionRule(stressBalls, floor, tolerances, collision => {    // stress balls stick to the floor; the floor does not move    collision.resolve(0.1, 0, 0, 1)})​new CollisionRule(bouncyBalls, stressBalls, tolerances, collision => {    // stress balls stick to bouncy balls, combining their velocities    collision.resolve(0.1, 0, 1, 1)})​// Define geometry once​const ballBuilder = new GeometryBuilder()​for (let i = 0; i < 20; i++) {    ballBuilder.vertex(V2.polar(1, i / 20 * (2 * Math.PI)))}​const ball = ballBuilder.finish()​// Later, during the simulation​const myBouncyBall = new PhysicsObject(clk, ball, [bouncyBalls])​js
+- A canvas rendering context, which all graphics will be drawn to.
 - An optional transform applied to all objects, which is used to map simulation coordinates to screen space.
 
 ```js
@@ -150,6 +150,8 @@ ctx.stroke()
 ```
 
 ### About the Provided  Template
+
+TODO remove everything about th
 
 At the beginning of this tutorial, I provided a template. This template provides a page equipped with a full screen canvas and some basic functionality.
 
