@@ -1,5 +1,5 @@
-import Transform from "../math/transform.mjs"
-import V2 from "../math/v2.mjs"
+import {Transform} from "@darcyvilkner/2d-geometry"
+import {V2} from "@darcyvilkner/2d-geometry"
 
 /**
  * Trajectories control the position and motion of objects over time.

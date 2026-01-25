@@ -1,0 +1,10 @@
+{
+  "name": "examples",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.mjs",
+  "dependencies": {
+    "@darcyvilkner/2d-geometry": "^1.0.0",
+    "@darcyvilkner/chrona-physics": "^1.0.0"
+  }
+}

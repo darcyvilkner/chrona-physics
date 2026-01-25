@@ -1,7 +1,7 @@
-import V2 from "../../math/v2.mjs"
-import {Geometry} from "./geometry.mjs"
-import {Edge} from "./edge.mjs"
-import {Vertex} from "./vertex.mjs"
+import {V2} from "@darcyvilkner/2d-geometry"
+import {Geometry} from "../physics/geometry/geometry.mjs"
+import {Edge} from "../physics/geometry/edge.mjs"
+import {Vertex} from "../physics/geometry/vertex.mjs"
 
 /**
  * Geometry builders are used to assist in creating {@link Geometry} objects.

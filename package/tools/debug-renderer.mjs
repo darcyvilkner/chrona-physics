@@ -1,5 +1,5 @@
-import Transform from "../math/transform.mjs"
-import V2 from "../math/v2.mjs"
+import {Transform} from "@darcyvilkner/2d-geometry"
+import {V2} from "@darcyvilkner/2d-geometry"
 
 /**
  * Assists in visualizing and debugging physics interactions via the {@link https://developer.mozilla.org/en-US/docs/Web/API/Canvas_API Canvas API}.
@@ -112,7 +112,6 @@ class DebugRenderer {
                 lastPos.set(edge.p1)
                 const p1 = edge.p1.xy.applyTransform(transform)
                 this.ctx.lineTo(p1.x, p1.y)
-                console.log(p1.x, p1.y)
             }
             // for(const vertex of object.geometry.vertices){
             //     const

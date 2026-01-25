@@ -1,0 +1,22 @@
+{
+  "name": "@darcyvilkner/chrona-physics",
+  "version": "1.0.2",
+  "description": "A lightweight physics library for games and simulations.",
+  "type": "module",
+  "main": "./index.mjs",
+  "exports": {
+    ".": "./index.mjs"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/Larbagar/chrona-physics"
+  },
+  "author": "Darcy Vilkner",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/Larbagar/chrona-physics/issues"
+  },
+  "dependencies": {
+    "@darcyvilkner/2d-geometry": "^1.0.0"
+  }
+}

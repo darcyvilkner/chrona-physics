@@ -5,7 +5,7 @@
 /**
  * @implements {Iterable}
  */
-export default class V2 {
+export class V2 {
     /** @type {Float32Array} */
     arr
 

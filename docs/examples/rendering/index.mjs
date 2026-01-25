@@ -1,5 +1,5 @@
-import {Clock, GeometryBuilder, PhysicsObject, Transform, V2} from "../../../chrona/index.mjs"
-import {DebugRenderer} from "../../../chrona/engine/debug-renderer.mjs"
+import {Transform, V2} from "@darcyvilkner/2d-geometry"
+import {Clock, GeometryBuilder, PhysicsObject, DebugRenderer} from "@darcyvilkner/chrona-physics"
 
 
 const

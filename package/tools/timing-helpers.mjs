@@ -1,4 +1,4 @@
-import {ClockEvent} from "./event.mjs"
+import {ClockEvent} from "../physics/timing/event.mjs"
 
 /**
  * Schedules a callback on a {@link Clock}.

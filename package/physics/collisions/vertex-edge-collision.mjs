@@ -1,6 +1,6 @@
 import {Collision} from "./collision.mjs"
-import V2 from "../../math/v2.mjs"
-import Transform from "../../math/transform.mjs"
+import {V2} from "@darcyvilkner/2d-geometry"
+import {Transform} from "@darcyvilkner/2d-geometry"
 
 const
     v0 = V2.zero(),

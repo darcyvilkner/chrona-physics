@@ -1,4 +1,4 @@
-import {V2} from "../../../chrona/index.mjs"
+import {V2} from "@darcyvilkner/2d-geometry"
 
 let
     /**

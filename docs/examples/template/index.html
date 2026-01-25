@@ -6,9 +6,19 @@
     <!--  <link rel="manifest" href="manifest.json" />-->
     <meta name = "viewport" content = "width = device-width, viewport-fit=cover">
     <link rel = "stylesheet" href = "./style.css" />
+
+    <script type="importmap">
+        {
+            "imports": {
+                "@darcyvilkner/2d-geometry": "./../node_modules/@darcyvilkner/2d-geometry/index.mjs",
+                "@darcyvilkner/chrona-physics": "./../node_modules/@darcyvilkner/chrona-physics/index.mjs"
+            }
+        }
+    </script>
     <script src = "./index.mjs" type = "module"></script>
+
 </head>
 <body>
-<canvas id = "canvas"></canvas>
+    <canvas id = "canvas"></canvas>
 </body>
 </html>

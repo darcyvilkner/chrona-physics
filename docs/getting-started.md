@@ -13,7 +13,7 @@ To start a project with Chrona simply copy the folder, `/chrona`, from the [Chro
 When you want to use Chrona, import what you need from `/chrona/index.mjs`.
 
 ```js
-import {V2, Transform, Clock, PhysicsObject} from "/chrona/index.mjs"
+import {V2, Transform, Clock, PhysicsObject} from "/package/index.mjs"
 ```
 
 Chrona uses JavaScript's [module system](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Modules). This means that your script must be marked as a module, and the page must be served from a secure context (`https://` or a local server).

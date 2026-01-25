@@ -1,13 +1,13 @@
 import {canvas, ctx, setupCanvas} from "./canvas.mjs"
+import {Transform, V2} from "@darcyvilkner/2d-geometry"
 import {
     Clock,
     CollisionGroup,
     CollisionRule,
     GeometryBuilder, PhysicsObject,
-    ToleranceProfile, Transform,
-    V2,
-} from "../../../chrona/index.mjs"
-import {DebugRenderer} from "../../../chrona/engine/debug-renderer.mjs"
+    ToleranceProfile,
+    DebugRenderer,
+} from "@darcyvilkner/chrona-physics"
 
 setupCanvas()
 
@@ -23,13 +23,13 @@ const
     })
 
 const boxGeometry = new GeometryBuilder()
-        .polygon(...V2.multipleFromArray([
-            -1, -1,
-            1, -1,
-            1, 1,
-            -1, 1,
-        ]))
-        .finish()
+    .polygon(...V2.multipleFromArray([
+        -1, -1,
+        1, -1,
+        1, 1,
+        -1, 1,
+    ]))
+    .finish()
 
 const
     objA = new PhysicsObject(clk, boxGeometry, [collisionGroup]),
