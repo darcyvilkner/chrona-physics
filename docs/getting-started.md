@@ -149,22 +149,14 @@ renderer.draw(objA, objB)
 ctx.stroke()
 ```
 
-### About the Provided  Template
-
-TODO remove everything about th
-
-At the beginning of this tutorial, I provided a template. This template provides a page equipped with a full screen canvas and some basic functionality.
-
-Know that nothing in the template is special to Chrona's debug renderer. It will work with any canvas with a 2d context.
-
-Below is a minimal example of displaying an object using the template. Don't worry about what exactly transforms are yet, or how the geometry is created. All that will be covered in later sections.
+Below is a minimal complete example of displaying an object. Don't worry about what exactly transforms are yet, or how the geometry is created. All that will be covered in later sections.
 
 ```js
-import {setupCanvas, canvas, ctx} from "./canvas.mjs"
-
-setupCanvas() // sets up the canvas and defines `canvas` and `ctx`.
-
 const
+    canvas = document.getElementById("canvas"),
+    ctx = canvas.getContext("2d"),
+    
+    
     clk = new Clock(),
 
     geometry = new GeometryBuilder(),
@@ -391,12 +383,12 @@ console.log(
 
 As you can see, the position the geometry has been translated to is now different, even though the geometry itself hasn't changed! This is ultimately how all motion in Chrona is achieved—through the modification of trajectories, not geometries.
 
-Let's put this together with an object and throw a visualization onto it:
+Let's put this together with an object and visualize the movement:
 
 ```js
-import {setupCanvas, canvas, ctx} from "./canvas.mjs"
-
-setupCanvas()
+const
+    canvas = document.getElementById("canvas"),
+    ctx = canvas.getContext("2d"
 
 // Clock setup
 
