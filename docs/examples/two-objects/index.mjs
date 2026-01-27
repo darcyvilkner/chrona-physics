@@ -59,7 +59,7 @@ draw()
 
 let t = 0
 onkeydown = e => {
-    t += 0.2
+    t -= 0.2
     clk.runTo(t)
 
     draw()

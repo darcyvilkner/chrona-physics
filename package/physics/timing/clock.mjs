@@ -2,6 +2,57 @@ import {Heap} from "../../util/heap.mjs"
 import {ClockEvent} from "./event.mjs"
 
 /**
+ * An error triggered when runTo is called with a time less than the clock's current time.
+ */
+class InvalidRunToTimeError extends Error {
+    /**
+     * The time of the clock when the error occurred.
+     *
+     * @type {number}
+     */
+    currentTime
+
+    /**
+     * The bad time passed into runTo.
+     *
+     * @type {number}
+     */
+    providedTime
+
+    /**
+     * @param {number} currentTime
+     * @param {number} providedTime
+     */
+    constructor(currentTime, providedTime){
+        super(`The time provided to runTo was less than the clock's current time (current: ${currentTime}, provided: ${providedTime}).`)
+        this.name = "InvalidRunToTimeError"
+        this.currentTime = currentTime
+        this.providedTime = providedTime
+    }
+}
+
+/**
+ * An error triggered when a call to {@link clock#runTo} triggers more than {@link Clock#runToCycleLimit} cycles.
+ */
+class RunToCycleLimitExceededError extends Error {
+    /**
+     * The cycle limit at the time of the error.
+     *
+     * @type {number}
+     */
+    cycleCount
+
+    /**
+     * @param {number} cycleCount
+     */
+    constructor(cycleCount){
+        super(`Too many cycles triggered from one runTo call. To increase the limit, modify clock.runToCycleLimit (currently ${cycleCount}).`)
+        this.name = "RunToCycleLimitExceededError"
+        this.cycleCount = cycleCount
+    }
+}
+
+/**
  * A clock schedules and executes timed events.
  *
  * Time advances by processing a sequence of cycles.
@@ -132,23 +183,29 @@ class Clock {
 
     /**
      * Runs the clock until the specified time is reached, executing all events that occur along the way.
-     * Passes time until the time specified is reached, running all events at the time they occur. 
+     * Passes time until the time specified is reached, running all events at the time they occur.
+     *
+     * Calls to `runTo` must always provide a time greater or equal to the current time.
+     * If not, a {@link InvalidRunToTimeError} is thrown.
      * 
-     * If this runs more than {@link Clock#runToCycleLimit} times, an error is thrown.
+     * If this call triggers more than {@link Clock#runToCycleLimit} cycles, a {@link RunToCycleLimitExceededError} is thrown.
      * This limit exists to prevent infinite loops or excessively long computations.
      * The calculation can be resumed by calling runTo again with the same time.
      * 
      * @param {number} time The time to advance to.
+     *
+     * @throws {InvalidRunToTimeError} if the time provided is before the current time.
+     * @throws {RunToCycleLimitExceededError} if this call triggers more than {@link Clock#runToCycleLimit} cycles.
      */
     runTo(time){
-        if(time < this.time) throw "Time provided is before clock current time."
+        if(time < this.time) throw new InvalidRunToTimeError(this.time, time)
 
-        let i = 0
+        let n = 0
         while(true){
-            if(this.runToCycleLimit <= i){
-                throw "Too many cycles from one runTo call. To increase the limit, modify clock.cycleLimit."
+            if(this.runToCycleLimit <= n){
+                throw new RunToCycleLimitExceededError(this.runToCycleLimit)
             }
-            i++
+            n++
 
             for(const preprocess of this.preprocesses){
                 preprocess(this.cycle)
@@ -213,4 +270,4 @@ class Clock {
     }
 }
 
-export {Clock}
+export {Clock, InvalidRunToTimeError, RunToCycleLimitExceededError}
