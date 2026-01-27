@@ -1,4 +1,4 @@
-export {Clock} from "./physics/timing/clock.mjs"
+export {Clock, RunToCycleLimitExceededError, InvalidRunToTimeError} from "./physics/timing/clock.mjs"
 export {ClockEvent} from "./physics/timing/event.mjs"
 export {schedule, cancel, scheduleLoop, cancelLoop} from "./tools/timing-helpers.mjs"
 
