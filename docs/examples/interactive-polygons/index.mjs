@@ -184,7 +184,7 @@ scheduleLoop(clock, 0, 0.01, () => {
     cursorTransform.setVel(vel)
 })
 
-let playing = false
+let playing = true
 
 onkeydown = e => {
     if(e.code == "Space"){
@@ -247,3 +247,5 @@ function loop() {
     if(!playing) return
     requestAnimationFrame(loop)
 }
+
+loop()
