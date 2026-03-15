@@ -67,16 +67,14 @@ wall.trajectory.setPos(-1, 0)
 const bigBox = new PhysicsObject(clk, boxGeometry, [bigBoxCollisionGroup])
 bigBox.trajectory.setTransform(
     Transform
-        .translateVals(1, 0),
-    null
+        .translateVals(1, 0)
 )
 bigBox.trajectory.impulse(-1, 0)
 
 const smallBox = new PhysicsObject(clk, boxGeometry, [smallBoxCollisionGroup])
 smallBox.trajectory.setTransform(
     Transform
-        .scale(0.5),
-    null
+        .scale(0.5)
 )
 
 

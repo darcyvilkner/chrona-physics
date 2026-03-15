@@ -20,6 +20,8 @@ function schedule(clock, time, callback){
 /**
  * Cancels a callback scheduled with {@link schedule}.
  *
+ * It is safe to cancel a callback multiple times.
+ *
  * @param {ClockEvent} event
  * The event to cancel.
  * Returned from {@link schedule}.

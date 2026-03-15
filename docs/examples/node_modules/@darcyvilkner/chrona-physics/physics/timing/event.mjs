@@ -53,6 +53,8 @@ class ClockEvent {
      * Cancels this event.
      *
      * This event's callback will not be run when the clock reaches this event's trigger time.
+     *
+     * It is safe to cancel an event multiple times.
      */
     cancel(){
         this.valid = false
