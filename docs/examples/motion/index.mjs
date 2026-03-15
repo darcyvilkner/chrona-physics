@@ -7,7 +7,6 @@ setupCanvas()
 const clk = new Clock()
 
 // Create geometry
-
 const geometry = new GeometryBuilder()
     .polygon(...V2.multipleFromVals(
         -1, -1,
@@ -18,18 +17,15 @@ const geometry = new GeometryBuilder()
     .finish()
 
 // Create trajectory
-
 const trajectory = new Trajectory(
     clk,
     Transform
         .scale(0.2)
         .translateVals(-0.5, -0.5),
 )
+trajectory.impulse(0.05, 0.05)
 
-trajectory.impulse(0.1, 0.1)
-
-// Create object
-
+// Create object with geometry and trajectory
 const obj = new PhysicsObject(clk, geometry, [], trajectory)
 
 const renderer = new DebugRenderer(
@@ -50,8 +46,9 @@ function draw(){
 draw()
 
 let t = 0
-onkeydown = () => {
+function advance(){
     t ++
     clk.runTo(t)
     draw()
 }
+setInterval(advance, 100)

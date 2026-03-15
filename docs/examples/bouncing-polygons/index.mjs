@@ -13,42 +13,39 @@ import {ToleranceProfile} from "../../../package/index.mjs"
 const
     boxSize = parseInt(prompt("Side length", "10")),
     zoom = 400 / boxSize,
-    shapeCount = parseInt(prompt("Objects", "160")),
-    shapeSpeed = boxSize / 10
-
-const
-    ringSize = 1,
-    ringTime = 0.4
+    polygonCount = parseInt(prompt("Objects", "160")),
+    polygonSpeed = boxSize / 10
 
 const clock = new Clock()
 
-// Shapes
 
-const shapeCollisionGroup = new CollisionGroup()
+// Polygons
 
-/** @type {Map<PhysicsObject, Shape>} */
-const shapeMap = new Map()
+const polygonCollisionGroup = new CollisionGroup()
 
-class Shape {
+
+// Map from simulated objects to complete object representations
+/** @type {Map<PhysicsObject, Polygon>} */
+const polygonMap = new Map()
+
+class Polygon {
     /**
      * @param {Geometry} geometry
      * @param {Trajectory} trajectory
      * @param {number} mass
      */
     constructor(geometry, trajectory, mass) {
-        this.geometry = geometry
-        this.trajectory = trajectory
-        this.object = new PhysicsObject(clock, this.geometry, new Set([shapeCollisionGroup]), this.trajectory)
+        this.object = new PhysicsObject(clock, geometry, [polygonCollisionGroup], trajectory)
         this.mass = mass
 
-        shapeMap.set(this.object, this)
+        polygonMap.set(this.object, this)
     }
 }
 
-/** @type {Array<Shape>} */
-const shapes = []
-
-for(let i = 0; i < shapeCount; i++){
+/**
+ * @returns {Geometry}
+ */
+function createPolygonGeometry(){
     const builder = new GeometryBuilder()
     const points = 3 + Math.floor(5 * Math.random())
     const start = Math.random() * 2 * Math.PI
@@ -57,20 +54,32 @@ for(let i = 0; i < shapeCount; i++){
         builder.to(V2.fromPolar(Math.random(), start + dir))
     }
     builder.close()
-    const geometry = builder.finish()
 
-    shapes.push(new Shape(
-        geometry,
+    return builder.finish()
+}
+
+/** @type {Array<Polygon>} */
+const polygons = []
+
+for(let i = 0; i < polygonCount; i++){
+
+    polygons.push(new Polygon(
+        createPolygonGeometry(),
         new Trajectory(
             clock,
             Transform.translateVals((1 - 2 * Math.random()) * (boxSize - 1), (1 - 2 * Math.random()) * (boxSize - 1)),
-            Transform.new(0, 0, 0, 0, ...V2.fromPolar(shapeSpeed * (1 + Math.random()), 2 * Math.PI * Math.random()))
+            Transform.new(0, 0, 0, 0, ...V2.fromPolar(polygonSpeed * (1 + Math.random()), 2 * Math.PI * Math.random()))
         ),
         Math.exp(4 * Math.random())
     ))
 }
 
+
 // Collision indicators
+
+const
+    indicatorSize = 1,
+    indicatorLifetime = 0.4
 
 class CollisionIndicator {
     /**
@@ -90,6 +99,7 @@ class CollisionIndicator {
 /** @type {Array<CollisionIndicator>} */
 const collisions = []
 
+
 // Border
 
 const borderCollisionGroup = new CollisionGroup()
@@ -99,23 +109,31 @@ const border = new PhysicsObject(clock, new GeometryBuilder().polygon(...V2.mult
     -1, 1,
     1, 1,
     1, -1,
-])).finish(), new Set([borderCollisionGroup]), new Trajectory(clock, Transform.scale(boxSize)))
+])).finish(), [borderCollisionGroup], new Trajectory(clock, Transform.scale(boxSize)))
+
 
 // Collision logic
 
 const toleranceProfile = new ToleranceProfile(0.1, 1e-2)
 
-new CollisionRule(shapeCollisionGroup, borderCollisionGroup, toleranceProfile, collision => {
-    const shape = shapeMap.get(collision.objA)
+// Polygon-border
+new CollisionRule(polygonCollisionGroup, borderCollisionGroup, toleranceProfile, collision => {
+
+    const polygon = polygonMap.get(collision.objA)
     collision.resolve(0, 1, 0, 1)
     collisions.push(new CollisionIndicator(collision.pos, collision.time, collision.relVel.mag, collision.weightedVel(0, 1)))
+
 }, true)
-new CollisionRule(shapeCollisionGroup, shapeCollisionGroup, toleranceProfile, collision => {
+
+// Polygon-polygon
+new CollisionRule(polygonCollisionGroup, polygonCollisionGroup, toleranceProfile, collision => {
+
     const
-        shapeA = shapeMap.get(collision.objA),
-        shapeB = shapeMap.get(collision.objB)
-    collision.resolve(0, 1, shapeA.mass, shapeB.mass)
-    collisions.push(new CollisionIndicator(collision.pos, collision.time, collision.relVel.mag, collision.weightedVel(shapeA.mass, shapeB.mass)))
+        polygonA = polygonMap.get(collision.objA),
+        polygonB = polygonMap.get(collision.objB)
+    collision.resolve(0, 1, polygonA.mass, polygonB.mass)
+    collisions.push(new CollisionIndicator(collision.pos, collision.time, collision.relVel.mag, collision.weightedVel(polygonA.mass, polygonB.mass)))
+
 }, true)
 
 
@@ -134,44 +152,41 @@ const renderer = new DebugRenderer(ctx, camera, {velocityScale: 0 * 10})
 
 function render(){
 
-
     ctx.clearRect(0, 0, canvas.width, canvas.height)
 
     ctx.resetTransform()
     ctx.scale(devicePixelRatio, devicePixelRatio)
 
-    ctx.globalAlpha = 0.5
-    ctx.fillStyle = "white"
+    // Draw Polygons
     ctx.beginPath()
-    for (const shape of shapes) {
-        renderer.draw(shape.object)
+    for (const polygon of polygons) {
+        renderer.draw(polygon.object)
     }
-
     ctx.globalAlpha = 1
     ctx.strokeStyle = "white"
     ctx.stroke()
 
-
+    // Draw border
     ctx.beginPath()
-
     renderer.draw(border)
-
     ctx.stroke()
 
-
-    while(collisions[0] && collisions[0].time < clock.time - ringTime) collisions.shift()
+    // Draw indicators
+    while(collisions[0] && collisions[0].time < clock.time - indicatorLifetime) collisions.shift()
+    ctx.fillStyle = "white"
     for(const collision of collisions){
         const
             dt = clock.time - collision.time,
             collisionPos = camera.applyVec(collision.pos.xy.addScaled(collision.vel, dt)),
-            alpha = 1 - (clock.time - collision.time) / ringTime
+            alpha = 1 - (clock.time - collision.time) / indicatorLifetime
         ctx.beginPath()
-        ctx.arc(collisionPos.x, collisionPos.y, ringSize * collision.size * dt / ringTime, 0, 2 * Math.PI)
+        ctx.arc(collisionPos.x, collisionPos.y, indicatorSize * collision.size * dt / indicatorLifetime, 0, 2 * Math.PI)
         ctx.globalAlpha = alpha
         ctx.fill()
     }
 
 }
+
 
 // Automatic time advancement
 
