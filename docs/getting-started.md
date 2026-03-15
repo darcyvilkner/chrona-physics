@@ -67,7 +67,7 @@ console.log(clk.time) // 4
 
 We've now advanced the clock to time `4`. But what exactly does `4` mean here? Four seconds? Four milliseconds? Four days?
 
-Chrona doesn't impose a time scale, so a unit of time can represent whatever makes sense for your simulation. All that matters is how far you advance the clock with `runTo`. For the sake of explanation, I'll refer to one time unit as a second, but until we start displaying things in real time, the distinction is arbitrary.
+Chrona doesn't impose a time scale, so a unit of time can represent whatever makes sense for your application. All that matters is how far you advance the clock with `runTo`. For the sake of explanation, I'll refer to one time unit as a second, but until we start displaying things in real time, the distinction is arbitrary.
 
 Advancing time isn't very interesting if nothing happens, so let's schedule some events:
 
@@ -159,7 +159,7 @@ const
     
     clk = new Clock(),
 
-    geometry = new GeometryBuilder(),
+    geometry = new GeometryBuilder()
         .polygon(...V2.multipleFromVals(
             -1, -1,
             1, -1,
@@ -388,7 +388,7 @@ Let's put this together with an object and visualize the movement:
 ```js
 const
     canvas = document.getElementById("canvas"),
-    ctx = canvas.getContext("2d"
+    ctx = canvas.getContext("2d")
 
 // Clock setup
 
