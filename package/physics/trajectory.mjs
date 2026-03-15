@@ -134,7 +134,7 @@ class Trajectory {
      * The change in the transform over time.
      * If not provided, the previous motion is used.
      */
-    setTransform(base, motion){
+    setTransform(base, motion = null){
         this.base.set(base)
         if(motion) this.motion.set(motion)
         this.recalculateCollisions()
