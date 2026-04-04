@@ -8,7 +8,7 @@ let
      */
     canvas,
     /**
-     * A {@link CanvasRenderinContext2D} for the {@link canvas fullscreen canvas}.
+     * A {@link CanvasRenderingContext2D} for the {@link canvas fullscreen canvas}.
      * @type {CanvasRenderingContext2D}
      */
     ctx,
