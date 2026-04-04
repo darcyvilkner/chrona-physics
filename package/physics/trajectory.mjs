@@ -241,7 +241,12 @@ class Trajectory {
      * @returns {V2}
      */
     posOf(...args){
-        return V2.new(...args).applyTransform(this.base)
+        const
+            dt = this.clock.time - this.time,
+            vec = V2.new(...args),
+            vel = vec.xy.applyTransform(this.motion)
+
+        return vec.applyTransform(this.base).addScaled(vel, dt)
     }
     /**
      * Computes the world-space velocity of a point in geometry space.
