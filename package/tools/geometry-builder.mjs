@@ -210,6 +210,18 @@ class GeometryBuilder{
     }
 
     /**
+     * Adds a point to the geometry, which will collide in all directions.
+     *
+     * @param {...V2} vertices The positions of the points being added.
+     */
+    points(...vertices){
+        for(const vertex of vertices) {
+            // A vertex with tangent vectors 0 will work for any direction.
+            this.vertexArray.push(new Vertex(vertex, V2.zero(), V2.zero()))
+        }
+    }
+
+    /**
      * Begins a new path, adds the provided vertices, and closes the path.
      *
      * @param {...V2} vertices The positions of the polygon's vertices.
