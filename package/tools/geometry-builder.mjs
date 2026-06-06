@@ -24,7 +24,7 @@ import {Vertex} from "../physics/geometry/vertex.mjs"
  *
  * // Counter-clockwise octagon
  * for(let i = 0; i < 8; i++){
- *     builder.vertices(V2.fromPolar(1, 2 * Math.PI * i / 8))
+ *     builder.to(V2.fromPolar(1, 2 * Math.PI * i / 8))
  * }
  * builder.close()
  *
