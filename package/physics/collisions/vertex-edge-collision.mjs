@@ -126,7 +126,7 @@ function vertexEdge(edgeObj, vertexObj, invert, now, toleranceProfile){
 
                 if(s < 0 || 1 < s) return null
 
-                const convex = 0 < v0p.cross(v1p)
+                const convex = 0 <= v0p.cross(v1p)
 
                 if(!convex) return null
 
