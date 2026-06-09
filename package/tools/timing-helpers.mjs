@@ -62,7 +62,7 @@ function scheduleLoop(clock, startTime, delay, callback){
 
     iteration(startTime)
 
-    return id
+    return thisId
 }
 
 /**
