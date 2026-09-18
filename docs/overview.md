@@ -24,6 +24,8 @@ In return, Chrona provides strong guarantees about the behavior of collisions. W
 
 This makes Chrona particularly pleasant to develop with. There is rarely any ambiguity about why a collision occurred, or why objects ended up in a particular configuration. The behavior of the engine follows directly from its rules, rather than from implementation details.
 
+In addition to this, Chrona has a philosophy against idle calculations. Objects moving through space in a constant manner will not have *any* performance impact until something you wrote causes them to change trajectory. This means that a call which advances time might perform no physics calculations at all.
+
 ## Timing
 
 The most fundamental difference between Chrona and most physics engines is how it handles time.
